@@ -1,0 +1,4 @@
+/.idea/
+/src/*/obj/
+/src/*/bin/
+/.vs/

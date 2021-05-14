@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolf.ManagerService.Domain", "src\Wolf.ManagerService.Domain\Wolf.ManagerService.Domain.csproj", "{4E07AFA7-7DC3-4AB5-AD14-99BFF62EBB5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolf.IdentityServer.Infrastructure", "src\Wolf.IdentityServer.Infrastructure\Wolf.IdentityServer.Infrastructure.csproj", "{90B11CBC-240F-43EF-B6B8-3C0211D29D28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E07AFA7-7DC3-4AB5-AD14-99BFF62EBB5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E07AFA7-7DC3-4AB5-AD14-99BFF62EBB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E07AFA7-7DC3-4AB5-AD14-99BFF62EBB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E07AFA7-7DC3-4AB5-AD14-99BFF62EBB5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90B11CBC-240F-43EF-B6B8-3C0211D29D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90B11CBC-240F-43EF-B6B8-3C0211D29D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90B11CBC-240F-43EF-B6B8-3C0211D29D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90B11CBC-240F-43EF-B6B8-3C0211D29D28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
