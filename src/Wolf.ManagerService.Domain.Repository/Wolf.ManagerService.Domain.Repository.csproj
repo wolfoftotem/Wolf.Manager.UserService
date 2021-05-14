@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wolf.ManagerService.Domain\Wolf.ManagerService.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Wolf.Extensions.DataBase.MySql" Version="0.0.1-preview-t010" />
+    </ItemGroup>
+
+</Project>

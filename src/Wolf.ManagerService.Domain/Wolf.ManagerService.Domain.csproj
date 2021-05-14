@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Wolf.IdentityServer.Infrastructure\Wolf.IdentityServer.Infrastructure.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.1.0" />
+    <PackageReference Include="Wolf.Extensions.DataBase.Abstractions" Version="0.0.1-preview-t010" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wolf.ManagerService.Infrastructure\Wolf.ManagerService.Infrastructure.csproj" />
+  </ItemGroup>
 
 </Project>
