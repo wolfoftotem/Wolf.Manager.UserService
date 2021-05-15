@@ -3,6 +3,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Wolf.Extensions.DataBase.MySql;
+using Wolf.ManagerService.Domain.Configurations;
 
 namespace Wolf.ManagerService.Domain.Repository
 {
@@ -11,9 +12,25 @@ namespace Wolf.ManagerService.Domain.Repository
     /// </summary>
     public class ManagerDbContext : MySqlDbContext<ManagerDbContext>
     {
-        public ManagerDbContext(DbContextOptions<ManagerDbContext> options)
-            : base(options)
+        private readonly AppConfig _appConfig;
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="appConfig"></param>
+        public ManagerDbContext(AppConfig appConfig)
         {
+            this._appConfig = appConfig;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySql(this._appConfig.DbConn);
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

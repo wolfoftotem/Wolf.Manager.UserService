@@ -10,7 +10,7 @@ namespace Wolf.ManagerService.Domain.Repository.Map
     /// <summary>
     ///
     /// </summary>
-    public class ApplicationsMap : IEntityTypeConfiguration<Applications>
+    public class ApplicationMap : IEntityTypeConfiguration<Applications>
     {
         public void Configure(EntityTypeBuilder<Applications> builder)
         {

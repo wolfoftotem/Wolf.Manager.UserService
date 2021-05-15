@@ -11,29 +11,14 @@ namespace Wolf.ManagerService.Domain.Configurations
     public class AppConfig : ISingletonConfigModel
     {
         /// <summary>
-        /// Identity connection string
-        /// </summary>
-        public string IdentityDbConn { get; set; }
-
-        /// <summary>
-        /// 操作 connection string
-        /// </summary>
-        public string OperateDbConn { get; set; }
-
-        /// <summary>
         /// 配置 connection string
         /// </summary>
-        public string ConfigurationDbConn { get; set; }
+        public string DbConn { get; set; }
 
         /// <summary>
         /// enable mysql log
         /// </summary>
         public bool EnableDebug { get; set; }
-
-        /// <summary>
-        /// 在线地址
-        /// </summary>
-        public string OnlinePath { get; set; }
 
         /// <summary>
         /// 是否启用定时任务

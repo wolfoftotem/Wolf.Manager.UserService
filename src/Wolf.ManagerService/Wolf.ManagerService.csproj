@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Wolf.ManagerService.Domain.Repository\Wolf.ManagerService.Domain.Repository.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
+    <PackageReference Include="Wolf.Extensions.DataBase" Version="0.0.1-preview-t010" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wolf.ManagerService.Domain.Repository\Wolf.ManagerService.Domain.Repository.csproj" />
+  </ItemGroup>
 
 </Project>
