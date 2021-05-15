@@ -26,16 +26,23 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         ///
         /// </summary>
+        /// <param name="appid">应用id</param>
         /// <param name="name">角色名称</param>
         /// <param name="summary">角色简介</param>
         /// <param name="userId">用户id</param>
-        public Roles(string name, string summary, Guid userId) : this()
+        public Roles(int appid, string name, string summary, Guid userId) : this()
         {
+            this.Appid = appid;
             this.Name = name;
             this.Summary = summary;
             this.CreateUserId = userId;
             this.UpdateUserId = userId;
         }
+
+        /// <summary>
+        /// 应用id
+        /// </summary>
+        public int Appid { get; private set; }
 
         /// <summary>
         /// 角色名称

@@ -18,6 +18,7 @@ namespace Wolf.ManagerService.Domain.Repository.Map
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).HasColumnName("id").IsRequired();
 
+            builder.Property(t => t.Appid).HasColumnName("appid").IsRequired();
             builder.Property(t => t.Name).HasColumnName("name").HasMaxLength(20).IsRequired();
             builder.Property(t => t.Summary).HasColumnName("summary").HasMaxLength(200);
             builder.Property(t => t.State).HasColumnName("state").IsRequired();

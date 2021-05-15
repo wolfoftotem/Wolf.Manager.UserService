@@ -23,12 +23,12 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         ///
         /// </summary>
-        /// <param name="applicationId">应用id</param>
+        /// <param name="appid">应用id</param>
         /// <param name="userId">用户id</param>
         /// <param name="roleId">角色id</param>
-        public AdminRoles(int applicationId,Guid userId, Guid roleId) : this()
+        public AdminRoles(int appid,Guid userId, Guid roleId) : this()
         {
-            this.ApplicationId = applicationId;
+            this.Appid = appid;
             this.UserId = userId;
             this.RoleId = roleId;
         }
@@ -36,7 +36,7 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         /// 应用id
         /// </summary>
-        public int ApplicationId { get; private set; }
+        public int Appid { get; private set; }
 
         /// <summary>
         /// 用户id
