@@ -18,7 +18,7 @@ namespace Wolf.ManagerService.Domain.Event.Admins
         /// <param name="ip">用户访问ip</param>
         /// <param name="userAgent">用户UserAgent</param>
         /// <param name="appid">应用id</param>
-        public LoginToEvent(Guid userId, string ip, string userAgent, int appid)
+        public LoginToEvent(Guid userId, string ip, string userAgent, Guid appid)
         {
             UserId = userId;
             Ip = ip;
@@ -44,6 +44,6 @@ namespace Wolf.ManagerService.Domain.Event.Admins
         /// <summary>
         /// 应用id
         /// </summary>
-        public int Appid { get; }
+        public Guid Appid { get; }
     }
 }

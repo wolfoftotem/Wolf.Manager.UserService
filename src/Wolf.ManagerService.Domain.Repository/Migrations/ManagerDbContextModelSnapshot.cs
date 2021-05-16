@@ -25,9 +25,9 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                         .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<int>("Appid")
+                    b.Property<Guid>("Appid")
                         .HasColumnName("appid")
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTimeOffset>("CreateTime")
                         .HasColumnName("create_time")
@@ -60,9 +60,9 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                         .HasColumnName("id")
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("ApplicationId")
-                        .HasColumnName("application_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Appid")
+                        .HasColumnName("appid")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnName("role_id")
@@ -102,8 +102,8 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnName("password")
-                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
-                        .HasMaxLength(50);
+                        .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
+                        .HasMaxLength(200);
 
                     b.Property<string>("PasswordSalt")
                         .IsRequired()
@@ -131,10 +131,10 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
 
             modelBuilder.Entity("Wolf.ManagerService.Domain.AggregatesModel.Applications", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("AddUserId")
                         .HasColumnName("add_user_id")
@@ -177,6 +177,10 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("Appid")
+                        .HasColumnName("appid")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTimeOffset>("CreateTime")

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,10 +9,15 @@ using Newtonsoft.Json.Serialization;
 using Wolf.Extensions.AutomationConfiguration;
 using Wolf.Extensions.DataBase;
 using Wolf.Extensions.DataBase.MySql;
+using Wolf.ManagerService.Domain.Configurations;
 using Wolf.ManagerService.Domain.Repository;
+using Wolf.ManagerService.Infrastructure.Configurations;
 
 namespace Wolf.ManagerService
 {
+    /// <summary>
+    ///
+    /// </summary>
     public class Startup
     {
         private readonly IConfiguration _configuration;
@@ -41,6 +42,8 @@ namespace Wolf.ManagerService
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
+            new AppConfig();
+            new JwtOptions();
             services.AddAutoConfig(this._configuration);
             services.AddDbContext(option => { option.UseMysqlDbContext<ManagerDbContext>(); });
         }
@@ -58,6 +61,10 @@ namespace Wolf.ManagerService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "manager/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -31,7 +31,7 @@ namespace Wolf.ManagerService.Infrastructure.Extensions
         /// <param name="options"></param>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public string GetToken(IEnumerable<Claim> claims, JwtOptions options, int appId)
+        public string GetToken(IEnumerable<Claim> claims, JwtOptions options, Guid appId)
         {
             SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(options.Secret));
             var jwtSecurityToken = new JwtSecurityToken(options.Issuer, appId+"", claims, DateTime.Now,

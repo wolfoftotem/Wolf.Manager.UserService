@@ -12,7 +12,6 @@ namespace Wolf.ManagerService.Controllers
     /// <summary>
     /// 基础控制器
     /// </summary>
-    [Route("[controller]/[action]")]
     public class BaseController : Controller
     {
         #region 格式化响应信息

@@ -56,12 +56,12 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         public string RealName { get; private set; }
 
         /// <summary>
-        /// 秘钥盐
+        /// 密码盐
         /// </summary>
         public string PasswordSalt { get; private set; }
 
         /// <summary>
-        /// 秘钥
+        /// 密码
         /// </summary>
         public string PasswordHash { get; private set; }
 
@@ -97,7 +97,7 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <param name="ip">用户ip</param>
         /// <param name="userAgent">用户浏览器UserAgent</param>
         /// <returns></returns>
-        public string Login(JwtOptions options, int appid, string ip, string userAgent)
+        public string Login(JwtOptions options, Guid appid, string ip, string userAgent)
         {
             this.LastUpdateTime = DateTimeOffset.Now;
             this.AddDomainEvent(new LoginToEvent(this.Id, ip, userAgent, appid));

@@ -10,13 +10,14 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
     /// <summary>
     /// 应用
     /// </summary>
-    public class Applications : AggregateRoot<int>
+    public class Applications : AggregateRoot<Guid>
     {
         /// <summary>
         ///
         /// </summary>
         public Applications()
         {
+            this.Id = ToolsCommon.GetGuid();
             this.State = true;
             this.CreateTime = DateTimeOffset.Now;
             this.UpdateTime = DateTimeOffset.Now;

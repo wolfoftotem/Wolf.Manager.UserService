@@ -24,5 +24,10 @@ namespace Wolf.ManagerService.Domain.Configurations
         /// 是否启用定时任务
         /// </summary>
         public bool RunTask { get; set; }
+
+        /// <summary>
+        /// 是否迁移
+        /// </summary>
+        public bool Migrate { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <param name="ip">登录ip</param>
         /// <param name="userAgent">浏览器UserAgent</param>
         /// <param name="appid">应用id</param>
-        public AdminLoginRecords(Guid userId, string ip, string userAgent,int appid) : this()
+        public AdminLoginRecords(Guid userId, string ip, string userAgent,Guid appid) : this()
         {
             this.UserId = userId;
             this.Ip = ip;
@@ -44,7 +44,7 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         /// 应用id
         /// </summary>
-        public int Appid { get; private set; }
+        public Guid Appid { get; private set; }
 
         /// <summary>
         /// 登录ip

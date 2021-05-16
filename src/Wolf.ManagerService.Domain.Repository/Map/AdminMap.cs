@@ -21,7 +21,7 @@ namespace Wolf.ManagerService.Domain.Repository.Map
             builder.Property(t => t.Account).HasColumnName("account").HasMaxLength(30).IsRequired();
             builder.Property(t => t.RealName).HasColumnName("real_name").HasMaxLength(20);
             builder.Property(t => t.PasswordSalt).HasColumnName("password_salt").HasMaxLength(6).IsRequired();
-            builder.Property(t => t.PasswordHash).HasColumnName("password").HasMaxLength(50).IsRequired();
+            builder.Property(t => t.PasswordHash).HasColumnName("password").HasMaxLength(200).IsRequired();
             builder.Property(t => t.UserState).HasColumnName("user_state").IsRequired();
             builder.Property(t => t.RegisterTime).HasColumnName("register_time").IsRequired();
             builder.Property(t => t.ForbitTime).HasColumnName("forbit_time");
