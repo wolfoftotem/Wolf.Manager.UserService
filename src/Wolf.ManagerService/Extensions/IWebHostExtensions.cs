@@ -3,14 +3,11 @@
 
 using System;
 using System.Linq;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wolf.ManagerService.Domain.AggregatesModel;
-using Wolf.ManagerService.Domain.Configurations;
 using Wolf.ManagerService.Domain.Repository;
 using Wolf.Systems.Core;
 

@@ -9,9 +9,7 @@ using Newtonsoft.Json.Serialization;
 using Wolf.Extensions.AutomationConfiguration;
 using Wolf.Extensions.DataBase;
 using Wolf.Extensions.DataBase.MySql;
-using Wolf.ManagerService.Domain.Configurations;
 using Wolf.ManagerService.Domain.Repository;
-using Wolf.ManagerService.Infrastructure.Configurations;
 
 namespace Wolf.ManagerService
 {
@@ -31,8 +29,11 @@ namespace Wolf.ManagerService
             this._configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson(options =>
@@ -42,8 +43,7 @@ namespace Wolf.ManagerService
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
-            new AppConfig();
-            new JwtOptions();
+            Domain.StartUp.Run(services);
             services.AddAutoConfig(this._configuration);
             services.AddDbContext(option => { option.UseMysqlDbContext<ManagerDbContext>(); });
         }
