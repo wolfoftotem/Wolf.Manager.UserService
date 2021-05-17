@@ -48,7 +48,7 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         /// 账户
         /// </summary>
-        public string Account { get; set; }
+        public string Account { get;private set; }
 
         /// <summary>
         /// 真实名称

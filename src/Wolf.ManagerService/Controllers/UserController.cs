@@ -2,14 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Wolf.Extensions.DataBase.Abstractions;
 using Wolf.ManagerService.Domain.AggregatesModel;
 using Wolf.ManagerService.Domain.Repository;
 using Wolf.ManagerService.Infrastructure.Configurations;
 using Wolf.ManagerService.Infrastructure.Extensions;
 using Wolf.ManagerService.Request.User;
+using Wolf.ManagerService.Response.User;
 using Wolf.Systems.Core;
 
 namespace Wolf.ManagerService.Controllers
@@ -78,6 +81,29 @@ namespace Wolf.ManagerService.Controllers
 
         #endregion
 
+        #region 得到用户详情
 
+        /// <summary>
+        /// 得到用户详情
+        /// </summary>
+        /// <param name="userId">用户id</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<JsonResult> Get([FromQuery(Name = "UserId")] Guid userId)
+        {
+            var user = await this._adminGuidQuery.GetQueryable().Where(x => x.Id == userId).Select(x =>
+                new UserDetailResponse()
+                {
+                    Id = x.Id,
+                    Account = x.Account,
+                    RealName = x.RealName,
+                    UserState = x.UserState,
+                    RegisterTime = x.RegisterTime,
+                    LastUpdateTime = x.LastUpdateTime
+                }).FirstOrDefaultAsync();
+            return Success(user);
+        }
+
+        #endregion
     }
 }
