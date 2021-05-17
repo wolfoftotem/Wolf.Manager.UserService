@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Wolf.ManagerService.Domain.Repository.Migrations
@@ -16,7 +15,7 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                     account = table.Column<string>(maxLength: 30, nullable: false),
                     real_name = table.Column<string>(maxLength: 20, nullable: true),
                     password_salt = table.Column<string>(maxLength: 6, nullable: false),
-                    password = table.Column<string>(maxLength: 50, nullable: false),
+                    password = table.Column<string>(maxLength: 200, nullable: false),
                     user_state = table.Column<int>(nullable: false),
                     register_time = table.Column<DateTimeOffset>(nullable: false),
                     forbit_time = table.Column<DateTimeOffset>(nullable: true),
@@ -33,7 +32,7 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                 {
                     id = table.Column<Guid>(maxLength: 36, nullable: false),
                     user_id = table.Column<Guid>(maxLength: 36, nullable: false),
-                    appid = table.Column<int>(nullable: false),
+                    appid = table.Column<Guid>(nullable: false),
                     ip = table.Column<string>(maxLength: 15, nullable: true),
                     user_agent = table.Column<string>(maxLength: 500, nullable: true),
                     create_time = table.Column<DateTimeOffset>(nullable: false)
@@ -48,7 +47,7 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    application_id = table.Column<int>(nullable: false),
+                    appid = table.Column<Guid>(nullable: false),
                     user_id = table.Column<Guid>(nullable: false),
                     role_id = table.Column<Guid>(nullable: false)
                 },
@@ -61,8 +60,7 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                 name: "applications",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    id = table.Column<Guid>(nullable: false),
                     name = table.Column<string>(maxLength: 20, nullable: false),
                     state = table.Column<bool>(nullable: false),
                     summary = table.Column<string>(maxLength: 50, nullable: true),
@@ -81,6 +79,7 @@ namespace Wolf.ManagerService.Domain.Repository.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
+                    appid = table.Column<Guid>(nullable: false),
                     name = table.Column<string>(maxLength: 20, nullable: false),
                     summary = table.Column<string>(maxLength: 200, nullable: true),
                     state = table.Column<bool>(nullable: false),
