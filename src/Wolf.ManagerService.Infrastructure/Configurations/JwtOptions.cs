@@ -16,6 +16,11 @@ namespace Wolf.ManagerService.Infrastructure.Configurations
         public string Issuer { get; set; }
 
         /// <summary>
+        ///
+        /// </summary>
+        public string Audience { get; set; }
+
+        /// <summary>
         /// 秘钥
         /// </summary>
         public string Secret { get; set; }

@@ -105,7 +105,7 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
             {
                 new Claim("UserId", this.Id.ToString()),
                 new Claim("Account", this.Account.SafeString())
-            }, options, appid);
+            }, options);
         }
 
         #endregion
