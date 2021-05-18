@@ -17,7 +17,6 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// </summary>
         public Applications()
         {
-            this.Id = ToolsCommon.GetGuid();
             this.State = true;
             this.CreateTime = DateTimeOffset.Now;
             this.UpdateTime = DateTimeOffset.Now;
@@ -26,10 +25,30 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         ///
         /// </summary>
+        public Applications(Guid id) : this()
+        {
+            base.Id = id;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="name">应用名称</param>
         /// <param name="summary">简介</param>
         /// <param name="userId">用户id</param>
-        public Applications(string name, string summary, Guid userId):this()
+        public Applications(string name, string summary, Guid userId) : this(ToolsCommon.GetGuid(), name, summary,
+            userId)
+        {
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">应用名称</param>
+        /// <param name="summary">简介</param>
+        /// <param name="userId">用户id</param>
+        public Applications(Guid id, string name, string summary, Guid userId) : this(id)
         {
             this.Name = name;
             this.Summary = summary;

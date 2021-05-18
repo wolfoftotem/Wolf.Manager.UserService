@@ -37,7 +37,7 @@ namespace Wolf.ManagerService.Extensions
                 Applications applications = context.Set<Applications>().FirstOrDefault(x => x.Name == "系统配置");
                 if (applications == null)
                 {
-                    applications = new Applications("系统配置", "配置后台权限", admins.Id);
+                    applications = new Applications(Guid.Parse("39fc8830-e1f7-4b85-0f56-f80f02548590"),"系统配置", "配置后台权限", admins.Id);
                     context.Set<Applications>().Add(applications);
                 }
 

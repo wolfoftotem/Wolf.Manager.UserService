@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using EInfrastructure.Core.Validation;
 using FluentValidation;
 using Wolf.DependencyInjection.Abstracts;
 using Wolf.Infrastructure.Core.Extensions.Validation;
