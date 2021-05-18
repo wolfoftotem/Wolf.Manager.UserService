@@ -88,7 +88,7 @@ namespace Wolf.ManagerService.Controllers
         /// </summary>
         /// <param name="userId">用户id</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public async Task<JsonResult> Get([FromQuery(Name = "UserId")] Guid userId)
         {
             var user = await this._adminGuidQuery.GetQueryable().Where(x => x.Id == userId).Select(x =>
@@ -101,6 +101,11 @@ namespace Wolf.ManagerService.Controllers
                     RegisterTime = x.RegisterTime,
                     LastUpdateTime = x.LastUpdateTime
                 }).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return Error("账号不存在");
+            }
+
             return Success(user);
         }
 
