@@ -4,6 +4,7 @@
 using System;
 using EInfrastructure.Core.Validation;
 using FluentValidation;
+using Newtonsoft.Json;
 using Wolf.DependencyInjection.Abstracts;
 using Wolf.Infrastructure.Core.Extensions.Validation;
 using Wolf.Systems.Core;
@@ -18,16 +19,19 @@ namespace Wolf.ManagerService.Request.User
         /// <summary>
         /// 账户
         /// </summary>
+        [JsonProperty(PropertyName = "account")]
         public string Account { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
+        [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
         /// 应用id
         /// </summary>
+        [JsonProperty(PropertyName = "appid")]
         public Guid Appid { get; set; }
 
         /// <summary>

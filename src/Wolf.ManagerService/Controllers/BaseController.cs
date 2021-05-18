@@ -43,7 +43,7 @@ namespace Wolf.ManagerService.Controllers
         protected JsonResult Success<T>(T data, string message = "success")
         {
             var result = new ApiResultResponse<object>(200, data, message);
-            return base.Json(result);
+            return GetJson(result);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Wolf.ManagerService.Controllers
         protected JsonResult Error(string message, int? code = null)
         {
             var result = new ApiResultResponse<object>(code ?? 201, null, message);
-            return base.Json(result);
+            return GetJson(result);
         }
 
         /// <summary>
@@ -68,8 +68,23 @@ namespace Wolf.ManagerService.Controllers
         protected JsonResult Error<T>(string message, T data, int? code = null)
         {
             var result = new ApiResultResponse<object>(code ?? 201, data, message);
-            return base.Json(result);
+            return GetJson(result);
         }
+
+        #region 得到Json
+
+        /// <summary>
+        /// 得到Json
+        /// </summary>
+        /// <param name="apiResultResponse"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        protected JsonResult GetJson<T>(ApiResultResponse<T> apiResultResponse)
+        {
+            return base.Json(apiResultResponse);
+        }
+
+        #endregion
 
         #region 格式化消息
 

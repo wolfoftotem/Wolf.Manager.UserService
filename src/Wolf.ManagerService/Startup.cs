@@ -1,4 +1,8 @@
 using System;
+using System.Linq;
+using Autofac;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +14,8 @@ using Newtonsoft.Json.Serialization;
 using Wolf.Extensions.AutomationConfiguration;
 using Wolf.Extensions.DataBase;
 using Wolf.Extensions.DataBase.MySql;
+using Wolf.Infrastructure.Core.Extensions.Common;
+using Wolf.ManagerService.Application.Behaviors;
 using Wolf.ManagerService.Domain.Repository;
 
 namespace Wolf.ManagerService
@@ -45,8 +51,35 @@ namespace Wolf.ManagerService
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
             Domain.StartUp.Run(services);
-            services.AddAutoConfig(this._configuration);
+            services
+                .AddMediatR(typeof(Startup))
+                .AddAutoConfig(this._configuration);
             services.AddDbContext(option => { option.UseMysqlDbContext<ManagerDbContext>(); });
+
+            Wolf.DependencyInjection.Autofac.ServiceCollectionExtensions.Build(services , builder =>
+            {
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+                Type[] mediator = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IMediator)).ToArray();
+                Type[] validators = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IValidator<>)).ToArray();
+                Type[] handler = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IRequestHandler<,>))
+                    .ToArray();
+                builder.RegisterTypes(mediator).AsImplementedInterfaces();
+                builder.RegisterTypes(validators).AsImplementedInterfaces();
+                builder.RegisterTypes(handler).AsImplementedInterfaces();
+                builder.Register<ServiceFactory>(context =>
+                {
+                    var componentContext = context.Resolve<IComponentContext>();
+                    return t =>
+                    {
+                        object o;
+                        return componentContext.TryResolve(t, out o) ? o : null;
+                    };
+                });
+
+                builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+                builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>)); //校验
+                builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>)); //事务
+            },"wolf");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
