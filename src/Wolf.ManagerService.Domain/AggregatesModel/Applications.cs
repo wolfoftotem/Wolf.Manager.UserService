@@ -90,5 +90,43 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// 修改用户id
         /// </summary>
         public Guid EditUserId { get; private set; }
+
+        #region methods
+
+        #region 更新应用
+
+        /// <summary>
+        /// 更新应用
+        /// </summary>
+        /// <param name="name">应用名称</param>
+        /// <param name="summary">应用简介</param>
+        /// <param name="userId">用户id</param>
+        public void Update(string name,string summary,Guid userId)
+        {
+            this.Name = name;
+            this.Summary = summary;
+            this.EditUserId = userId;
+            this.UpdateTime=DateTimeOffset.Now;
+        }
+
+        #endregion
+
+        #region 更改状态
+
+        /// <summary>
+        /// 更改状态
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <param name="userId">用户id</param>
+        public void ChangeState(bool state,Guid userId)
+        {
+            this.State = state;
+            this.EditUserId = userId;
+            this.UpdateTime=DateTimeOffset.Now;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

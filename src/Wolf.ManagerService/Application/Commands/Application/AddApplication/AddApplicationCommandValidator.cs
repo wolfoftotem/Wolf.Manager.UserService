@@ -4,7 +4,7 @@
 using FluentValidation;
 using Wolf.Systems.Core;
 
-namespace Wolf.ManagerService.Application.Commands.Application
+namespace Wolf.ManagerService.Application.Commands.Application.AddApplication
 {
     /// <summary>
     ///

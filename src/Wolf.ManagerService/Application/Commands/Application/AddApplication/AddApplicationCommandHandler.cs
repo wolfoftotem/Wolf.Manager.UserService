@@ -10,7 +10,7 @@ using Wolf.ManagerService.Domain.Repository;
 using Wolf.ManagerService.Domain.Repository.Services;
 using Wolf.Systems.Data.Abstractions;
 
-namespace Wolf.ManagerService.Application.Commands.Application
+namespace Wolf.ManagerService.Application.Commands.Application.AddApplication
 {
     /// <summary>
     ///
@@ -18,17 +18,14 @@ namespace Wolf.ManagerService.Application.Commands.Application
     public class AddApplicationCommandHandler : IRequestHandler<AddApplicationCommand, ApiResultResponse<string>>
     {
         private readonly IApplicationRepository _applicationRepository;
-        private readonly IUnitOfWork<ManagerDbContext> _unitOfWork;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="applicationRepository"></param>
-        /// <param name="unitOfWork"></param>
-        public AddApplicationCommandHandler(IApplicationRepository applicationRepository,IUnitOfWork<ManagerDbContext> unitOfWork)
+        public AddApplicationCommandHandler(IApplicationRepository applicationRepository)
         {
             this._applicationRepository = applicationRepository;
-            this._unitOfWork = unitOfWork;
         }
 
         /// <summary>

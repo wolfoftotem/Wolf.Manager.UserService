@@ -5,7 +5,7 @@ using MediatR;
 using Newtonsoft.Json;
 using Wolf.Infrastructure.Core.Configurations.Response;
 
-namespace Wolf.ManagerService.Application.Commands.Application
+namespace Wolf.ManagerService.Application.Commands.Application.AddApplication
 {
     /// <summary>
     /// 添加应用

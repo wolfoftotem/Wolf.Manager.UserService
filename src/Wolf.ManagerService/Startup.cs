@@ -17,6 +17,7 @@ using Wolf.Extensions.DataBase.MySql;
 using Wolf.Infrastructure.Core.Extensions.Common;
 using Wolf.ManagerService.Application.Behaviors;
 using Wolf.ManagerService.Domain.Repository;
+using Wolf.Systems.Core;
 
 namespace Wolf.ManagerService
 {
@@ -55,31 +56,32 @@ namespace Wolf.ManagerService
                 .AddMediatR(typeof(Startup))
                 .AddAutoConfig(this._configuration);
             services.AddDbContext(option => { option.UseMysqlDbContext<ManagerDbContext>(); });
+            Wolf.DependencyInjection.ServiceCollectionExtensions.AddAutoInject(services,"wolf");
+        }
 
-            Wolf.DependencyInjection.Autofac.ServiceCollectionExtensions.Build(services , builder =>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            Type[] mediator = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IMediator)).ToArray();
+            Type[] validators = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IValidator<>)).ToArray();
+            Type[] handler = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IRequestHandler<,>))
+                .ToArray();
+            builder.RegisterTypes(mediator).AsImplementedInterfaces();
+            builder.RegisterTypes(validators).AsImplementedInterfaces();
+            builder.RegisterTypes(handler).AsImplementedInterfaces();
+            builder.Register<ServiceFactory>(context =>
             {
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-                Type[] mediator = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IMediator)).ToArray();
-                Type[] validators = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IValidator<>)).ToArray();
-                Type[] handler = TypeFinderCommon.TypeFinderOfClass(assemblies, typeof(IRequestHandler<,>))
-                    .ToArray();
-                builder.RegisterTypes(mediator).AsImplementedInterfaces();
-                builder.RegisterTypes(validators).AsImplementedInterfaces();
-                builder.RegisterTypes(handler).AsImplementedInterfaces();
-                builder.Register<ServiceFactory>(context =>
+                var componentContext = context.Resolve<IComponentContext>();
+                return t =>
                 {
-                    var componentContext = context.Resolve<IComponentContext>();
-                    return t =>
-                    {
-                        object o;
-                        return componentContext.TryResolve(t, out o) ? o : null;
-                    };
-                });
+                    object o;
+                    return componentContext.TryResolve(t, out o) ? o : null;
+                };
+            });
 
-                builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-                builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>)); //校验
-                builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>)); //事务
-            },"wolf");
+            builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>)); //校验
+            builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>)); //事务
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
