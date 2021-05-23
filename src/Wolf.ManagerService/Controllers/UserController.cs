@@ -40,7 +40,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="jwtOptions"></param>
         public UserController(IQuery<ManagerDbContext, Admins, Guid> adminGuidQuery,
             IQuery<ManagerDbContext, Applications, Guid> applicationQuery,
-            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery, JwtOptions jwtOptions,IService service)
+            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery, JwtOptions jwtOptions, IService service)
         {
             this._adminGuidQuery = adminGuidQuery;
             this._applicationQuery = applicationQuery;
@@ -80,6 +80,15 @@ namespace Wolf.ManagerService.Controllers
                 return Error("权限不足");
             }
 
+            return Success(new UserDetailResponse
+            {
+                Id = login.Id,
+                Account = login.Account,
+                RealName = login.RealName,
+                UserState = login.UserState,
+                RegisterTime = login.RegisterTime,
+                LastUpdateTime = login.LastUpdateTime
+            });
             return Success(login.Login(this._jwtOptions, request.Appid, HttpContext.GetClientIp(),
                 HttpContext.GetClientUserAgent()));
         }
@@ -117,19 +126,19 @@ namespace Wolf.ManagerService.Controllers
         #endregion
     }
 
-    public interface IService:IPerRequest
+    public interface IService : IPerRequest
     {
         void Test();
     }
-    public class Service:IService
+
+    public class Service : IService
     {
         public Service()
         {
-
         }
+
         public void Test()
         {
-
         }
     }
 }
