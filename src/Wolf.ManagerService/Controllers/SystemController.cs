@@ -21,11 +21,11 @@ namespace Wolf.ManagerService.Controllers
         [HttpGet]
         public async Task<JsonResult> GetEnvironmentAsync()
         {
-            return Success(new SystemPlatformResponse()
+            return await Task.FromResult(Success(new SystemPlatformResponse()
             {
                 Run = new SystemRunEvnResponse(),
                 Platform = new SystemPlatformInfoResponse()
-            });
+            }));
         }
 
         #endregion
