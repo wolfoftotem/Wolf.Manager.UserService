@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Wolf.Infrastructure.Core.Configurations.Response;
 using Wolf.ManagerService.Domain.AggregatesModel;
-using Wolf.ManagerService.Domain.Repository;
 using Wolf.ManagerService.Domain.Repository.Services;
-using Wolf.Systems.Data.Abstractions;
 
 namespace Wolf.ManagerService.Application.Commands.Application.AddApplication
 {

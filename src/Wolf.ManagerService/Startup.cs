@@ -17,7 +17,6 @@ using Wolf.Extensions.DataBase.MySql;
 using Wolf.Infrastructure.Core.Extensions.Common;
 using Wolf.ManagerService.Application.Behaviors;
 using Wolf.ManagerService.Domain.Repository;
-using Wolf.Systems.Core;
 
 namespace Wolf.ManagerService
 {

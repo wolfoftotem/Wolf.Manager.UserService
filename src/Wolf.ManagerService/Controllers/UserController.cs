@@ -6,18 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Wolf.DependencyInjection.Abstracts;
 using Wolf.Extensions.DataBase.Abstractions;
 using Wolf.Infrastructure.Core.Request;
 using Wolf.ManagerService.Domain.AggregatesModel;
 using Wolf.ManagerService.Domain.Repository;
-using Wolf.ManagerService.Domain.Repository.Services;
 using Wolf.ManagerService.Infrastructure.Configurations;
 using Wolf.ManagerService.Infrastructure.Extensions;
 using Wolf.ManagerService.Request.User;
 using Wolf.ManagerService.Response.User;
 using Wolf.Systems.Core;
-using Wolf.Systems.Data.Abstractions;
 
 namespace Wolf.ManagerService.Controllers
 {
@@ -40,13 +37,12 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="jwtOptions"></param>
         public UserController(IQuery<ManagerDbContext, Admins, Guid> adminGuidQuery,
             IQuery<ManagerDbContext, Applications, Guid> applicationQuery,
-            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery, JwtOptions jwtOptions, IService service)
+            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery, JwtOptions jwtOptions)
         {
             this._adminGuidQuery = adminGuidQuery;
             this._applicationQuery = applicationQuery;
             this._adminRoleQuery = adminRoleQuery;
             this._jwtOptions = jwtOptions;
-            service.Test();
         }
 
         #region 登录
@@ -57,7 +53,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<JsonResult> Login([FromBody] LoginRequest request)
+        public async Task<JsonResult> LoginAsync([FromBody] LoginRequest request)
         {
             if (!await this._applicationQuery.ExistsAsync(x => x.Id == request.Appid && x.State))
             {
@@ -103,7 +99,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="baseUserRequest"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<JsonResult> Get(BaseUserRequest baseUserRequest)
+        public async Task<JsonResult> GetAsync(BaseUserRequest baseUserRequest)
         {
             var user = await this._adminGuidQuery.GetQueryable().Where(x => x.Id == baseUserRequest.UserId).Select(x =>
                 new UserDetailResponse()
@@ -124,21 +120,5 @@ namespace Wolf.ManagerService.Controllers
         }
 
         #endregion
-    }
-
-    public interface IService : IPerRequest
-    {
-        void Test();
-    }
-
-    public class Service : IService
-    {
-        public Service()
-        {
-        }
-
-        public void Test()
-        {
-        }
     }
 }

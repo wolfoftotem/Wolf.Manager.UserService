@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Wolf.Extensions.DataBase.Abstractions;
 using Wolf.Infrastructure.Core.Configurations.Response;
 using Wolf.Infrastructure.Core.Request;
-using Wolf.ManagerService.Application.Commands.Application;
 using Wolf.ManagerService.Application.Commands.Application.AddApplication;
 using Wolf.ManagerService.Application.Commands.Application.ChangeState;
 using Wolf.ManagerService.Application.Commands.Application.EditApplication;
@@ -20,7 +18,6 @@ using Wolf.ManagerService.Domain.Repository;
 using Wolf.ManagerService.Request.Application.List;
 using Wolf.Systems.Abstracts;
 using Wolf.Systems.Core;
-using Wolf.Systems.Core.Configuration;
 
 namespace Wolf.ManagerService.Controllers
 {
@@ -52,7 +49,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="baseUserRequest"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<JsonResult> Add([FromBody] AddApplicationCommand command, BaseUserRequest baseUserRequest)
+        public async Task<JsonResult> AddAsync([FromBody] AddApplicationCommand command, BaseUserRequest baseUserRequest)
         {
             command?.SetOperateUser(baseUserRequest);
             ApiResultResponse<string> apiResultResponse = await this._mediator.Send(command);
@@ -70,7 +67,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="baseUserRequest"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<JsonResult> Edit([FromBody] EditApplicationCommand command, BaseUserRequest baseUserRequest)
+        public async Task<JsonResult> EditAsync([FromBody] EditApplicationCommand command, BaseUserRequest baseUserRequest)
         {
             command?.SetOperateUser(baseUserRequest);
             ApiResultResponse<string> apiResultResponse = await this._mediator.Send(command);
@@ -88,7 +85,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="baseUserRequest"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<JsonResult> ChangeState([FromBody] ChangeStateCommand command,
+        public async Task<JsonResult> ChangeStateAsync([FromBody] ChangeStateCommand command,
             BaseUserRequest baseUserRequest)
         {
             command?.SetOperateUser(baseUserRequest);
@@ -107,7 +104,7 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="baseUserRequest"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<JsonResult> GetList(RequestListQuery query, BaseUserRequest baseUserRequest)
+        public async Task<JsonResult> GetListAsync(RequestListQuery query, BaseUserRequest baseUserRequest)
         {
             Expression<Func<Applications, bool>> condition = x => true;
             if (!query.Name.IsNullOrWhiteSpace())
