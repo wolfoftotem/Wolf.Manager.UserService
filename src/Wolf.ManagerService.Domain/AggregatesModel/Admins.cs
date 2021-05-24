@@ -2,14 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using Wolf.Infrastructure.Core.Configurations.Enumeration;
 using Wolf.Infrastructure.Core.Extensions.Common;
 using Wolf.ManagerService.Domain.Event.Admins;
 using Wolf.ManagerService.Domain.SeedWork;
-using Wolf.ManagerService.Infrastructure.Configurations;
-using Wolf.ManagerService.Infrastructure.Extensions;
 using Wolf.Systems.Core;
 
 namespace Wolf.ManagerService.Domain.AggregatesModel
@@ -92,20 +88,14 @@ namespace Wolf.ManagerService.Domain.AggregatesModel
         /// <summary>
         /// 登录
         /// </summary>
-        /// <param name="options">jwt配置信息</param>
         /// <param name="appid">应用id</param>
         /// <param name="ip">用户ip</param>
         /// <param name="userAgent">用户浏览器UserAgent</param>
         /// <returns></returns>
-        public string Login(JwtOptions options, Guid appid, string ip, string userAgent)
+        public void Login(Guid appid, string ip, string userAgent)
         {
             this.LastUpdateTime = DateTimeOffset.Now;
             this.AddDomainEvent(new LoginToEvent(this.Id, ip, userAgent, appid));
-            return JwtCommon.Instance.GetToken(new List<Claim>()
-            {
-                new Claim("UserId", this.Id.ToString()),
-                new Claim("Account", this.Account.SafeString())
-            }, options);
         }
 
         #endregion

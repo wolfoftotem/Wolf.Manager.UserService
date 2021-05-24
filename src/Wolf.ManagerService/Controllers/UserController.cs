@@ -10,7 +10,6 @@ using Wolf.Extensions.DataBase.Abstractions;
 using Wolf.Infrastructure.Core.Configurations.Request;
 using Wolf.ManagerService.Domain.AggregatesModel;
 using Wolf.ManagerService.Domain.Repository;
-using Wolf.ManagerService.Infrastructure.Configurations;
 using Wolf.ManagerService.Infrastructure.Extensions;
 using Wolf.ManagerService.Request.User;
 using Wolf.ManagerService.Response.User;
@@ -26,7 +25,6 @@ namespace Wolf.ManagerService.Controllers
         private readonly IQuery<ManagerDbContext, Admins, Guid> _adminGuidQuery;
         private readonly IQuery<ManagerDbContext, Applications, Guid> _applicationQuery;
         private readonly IQuery<ManagerDbContext, AdminRoles, Guid> _adminRoleQuery;
-        private readonly JwtOptions _jwtOptions;
 
         /// <summary>
         ///
@@ -34,15 +32,13 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="adminGuidQuery"></param>
         /// <param name="applicationQuery"></param>
         /// <param name="adminRoleQuery"></param>
-        /// <param name="jwtOptions"></param>
         public UserController(IQuery<ManagerDbContext, Admins, Guid> adminGuidQuery,
             IQuery<ManagerDbContext, Applications, Guid> applicationQuery,
-            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery, JwtOptions jwtOptions)
+            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery)
         {
             this._adminGuidQuery = adminGuidQuery;
             this._applicationQuery = applicationQuery;
             this._adminRoleQuery = adminRoleQuery;
-            this._jwtOptions = jwtOptions;
         }
 
         #region 登录
@@ -60,33 +56,33 @@ namespace Wolf.ManagerService.Controllers
                 return Error("不支持的应用");
             }
 
-            var login = await this._adminGuidQuery.GetOneAsync(x => x.Account == request.Account);
-            if (login == null)
+            var user = await this._adminGuidQuery.GetOneAsync(x => x.Account == request.Account);
+            if (user == null)
             {
                 return Error("账号不存在");
             }
 
-            if (login.PasswordHash != (request.Password + login.PasswordSalt).Sha256())
+            if (user.PasswordHash != (request.Password + user.PasswordSalt).Sha256())
             {
                 return Error("密码输入错误，请重新输入");
             }
 
-            if (!await this._adminRoleQuery.ExistsAsync(x => x.UserId == login.Id && x.Appid == request.Appid))
+            if (!await this._adminRoleQuery.ExistsAsync(x => x.UserId == user.Id && x.Appid == request.Appid))
             {
                 return Error("权限不足");
             }
 
+            user.Login(request.Appid,HttpContext.GetClientIp(),
+                HttpContext.GetClientUserAgent());
             return Success(new UserDetailResponse
             {
-                Id = login.Id,
-                Account = login.Account,
-                RealName = login.RealName,
-                UserState = login.UserState,
-                RegisterTime = login.RegisterTime,
-                LastUpdateTime = login.LastUpdateTime
+                Id = user.Id,
+                Account = user.Account,
+                RealName = user.RealName,
+                UserState = user.UserState,
+                RegisterTime = user.RegisterTime,
+                LastUpdateTime = user.LastUpdateTime
             });
-            return Success(login.Login(this._jwtOptions, request.Appid, HttpContext.GetClientIp(),
-                HttpContext.GetClientUserAgent()));
         }
 
         #endregion
