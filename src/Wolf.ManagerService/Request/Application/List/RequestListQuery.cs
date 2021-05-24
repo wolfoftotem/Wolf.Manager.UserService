@@ -1,7 +1,7 @@
 ﻿// Copyright (c) zhenlei520 All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Wolf.Infrastructure.Core.Request;
+using Wolf.Infrastructure.Core.Configurations.Request;
 
 namespace Wolf.ManagerService.Request.Application.List
 {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wolf.Extensions.DataBase.Abstractions;
-using Wolf.Infrastructure.Core.Request;
+using Wolf.Infrastructure.Core.Configurations.Request;
 using Wolf.ManagerService.Domain.AggregatesModel;
 using Wolf.ManagerService.Domain.Repository;
 using Wolf.ManagerService.Infrastructure.Configurations;

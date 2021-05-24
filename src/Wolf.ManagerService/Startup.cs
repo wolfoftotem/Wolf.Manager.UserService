@@ -14,7 +14,7 @@ using Newtonsoft.Json.Serialization;
 using Wolf.Extensions.AutomationConfiguration;
 using Wolf.Extensions.DataBase;
 using Wolf.Extensions.DataBase.MySql;
-using Wolf.Infrastructure.Core.Extensions.Common;
+using Wolf.Infrastructure.Core.Common;
 using Wolf.ManagerService.Application.Behaviors;
 using Wolf.ManagerService.Domain.Repository;
 
