@@ -11,7 +11,7 @@ using Wolf.Systems.Data.Abstractions;
 namespace Wolf.ManagerService.Application.Behaviors
 {
     /// <summary>
-    /// 交易
+    ///
     /// </summary>
     /// <typeparam name="TRequest"></typeparam>
     /// <typeparam name="TResponse"></typeparam>

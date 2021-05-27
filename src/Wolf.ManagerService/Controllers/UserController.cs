@@ -4,16 +4,19 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wolf.Extensions.DataBase.Abstractions;
 using Wolf.Infrastructure.Core.Configurations.Request;
 using Wolf.ManagerService.Domain.AggregatesModel;
 using Wolf.ManagerService.Domain.Repository;
+using Wolf.ManagerService.Domain.Repository.Extension;
 using Wolf.ManagerService.Infrastructure.Extensions;
 using Wolf.ManagerService.Request.User;
 using Wolf.ManagerService.Response.User;
 using Wolf.Systems.Core;
+using Wolf.Systems.Data.Abstractions;
 
 namespace Wolf.ManagerService.Controllers
 {
@@ -25,6 +28,8 @@ namespace Wolf.ManagerService.Controllers
         private readonly IQuery<ManagerDbContext, Admins, Guid> _adminGuidQuery;
         private readonly IQuery<ManagerDbContext, Applications, Guid> _applicationQuery;
         private readonly IQuery<ManagerDbContext, AdminRoles, Guid> _adminRoleQuery;
+        private readonly IMediator _mediator;
+        private readonly IUnitOfWork<ManagerDbContext> _unitOfWork;
 
         /// <summary>
         ///
@@ -32,13 +37,19 @@ namespace Wolf.ManagerService.Controllers
         /// <param name="adminGuidQuery"></param>
         /// <param name="applicationQuery"></param>
         /// <param name="adminRoleQuery"></param>
+        /// <param name="mediator"></param>
+        /// <param name="unitOfWork"></param>
         public UserController(IQuery<ManagerDbContext, Admins, Guid> adminGuidQuery,
             IQuery<ManagerDbContext, Applications, Guid> applicationQuery,
-            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery)
+            IQuery<ManagerDbContext, AdminRoles, Guid> adminRoleQuery,
+            IMediator mediator,
+            IUnitOfWork<ManagerDbContext> unitOfWork)
         {
             this._adminGuidQuery = adminGuidQuery;
             this._applicationQuery = applicationQuery;
             this._adminRoleQuery = adminRoleQuery;
+            this._mediator = mediator;
+            this._unitOfWork = unitOfWork;
         }
 
         #region 登录
@@ -72,8 +83,10 @@ namespace Wolf.ManagerService.Controllers
                 return Error("权限不足");
             }
 
-            user.Login(request.Appid,HttpContext.GetClientIp(),
+            user.Login(request.Appid, HttpContext.GetClientIp(),
                 HttpContext.GetClientUserAgent());
+            await this._mediator.DispatchDomainEventsAsync<Guid>(this._unitOfWork as DbContext);
+            await this._unitOfWork.SaveChangesAsync();
             return Success(new UserDetailResponse
             {
                 Id = user.Id,
