@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Wolf.ManagerService.Domain.Repository;
-using Wolf.ManagerService.Extensions;
+using Wolf.ManagerService.Domain.Repository.Extension;
 using Wolf.Systems.Data.Abstractions;
 
 namespace Wolf.ManagerService.Application.Behaviors
@@ -21,12 +21,14 @@ namespace Wolf.ManagerService.Application.Behaviors
 
         private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;
         private readonly DbContext _dbContext;
+        private readonly IMediator _mediator;
 
         public TransactionBehaviour(IUnitOfWork<ManagerDbContext> dbContext,
-            ILogger<TransactionBehaviour<TRequest, TResponse>> logger)
+            ILogger<TransactionBehaviour<TRequest, TResponse>> logger, IMediator mediator)
         {
             _dbContext = dbContext as DbContext ?? throw new ArgumentException(nameof(ManagerDbContext));
             _logger = logger ?? throw new ArgumentException(nameof(ILogger));
+            this._mediator = mediator;
         }
 
         #endregion
@@ -42,7 +44,7 @@ namespace Wolf.ManagerService.Application.Behaviors
             RequestHandlerDelegate<TResponse> next)
         {
             //类名
-            var typeName = request.GetGenericTypeName();
+            // var typeName = request.GetGenericTypeName();
             TResponse response = default(TResponse);
             try
             {
@@ -60,6 +62,7 @@ namespace Wolf.ManagerService.Application.Behaviors
                     // using (var transaction = await _dbContext.BeginTransactionAsync(cancellationToken))
                     // {
                     response = await next();
+                    await this._mediator.DispatchDomainEventsAsync<Guid>(this._dbContext);
                     await this._dbContext.SaveChangesAsync(cancellationToken);
                     // await _dbContext.CommitTransactionAsync(transaction);
                     // }
