@@ -95,7 +95,7 @@ namespace Wolf.ManagerService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello ManagerService!"); });
 
                 endpoints.MapControllerRoute(
                     name: "default",
