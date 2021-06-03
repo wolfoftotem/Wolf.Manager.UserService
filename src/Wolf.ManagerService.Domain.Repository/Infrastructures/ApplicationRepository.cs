@@ -16,15 +16,8 @@ namespace Wolf.ManagerService.Domain.Repository.Infrastructures
     /// </summary>
     public class ApplicationRepository : Repository<ManagerDbContext, Applications, Guid>, IApplicationRepository
     {
-        private readonly DbContext Dbcontext;
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="unitOfWork"></param>
         public ApplicationRepository(IUnitOfWork<ManagerDbContext> unitOfWork) : base(unitOfWork)
         {
-            this.Dbcontext = unitOfWork as DbContext;
         }
 
         #region 根据应用名称得到应用信息
