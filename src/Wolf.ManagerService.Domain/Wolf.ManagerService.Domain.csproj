@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
-    <PackageReference Include="Wolf.Extensions.DataBase.Abstractions" Version="0.0.1-preview-t011" />
+    <PackageReference Include="Wolf.Extensions.DataBase.Abstractions" Version="0.0.1-preview-t012" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wolf.ManagerService.Infrastructure\Wolf.ManagerService.Infrastructure.csproj" />

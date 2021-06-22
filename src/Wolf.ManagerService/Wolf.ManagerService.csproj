@@ -6,7 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
-    <PackageReference Include="Wolf.Extensions.DataBase" Version="0.0.1-preview-t011" />
+    <PackageReference Include="Wolf.Extensions.DataBase" Version="0.0.1-preview-t012" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wolf.ManagerService.Domain.Repository\Wolf.ManagerService.Domain.Repository.csproj" />
