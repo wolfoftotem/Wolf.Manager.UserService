@@ -8,9 +8,6 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configurations" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Wolf.Infrastructure.Core" Version="0.0.1" />
   </ItemGroup>
 </Project>
